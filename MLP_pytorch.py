@@ -117,5 +117,3 @@ def test():
 # test()
 
 
-print(model.parameters)
-

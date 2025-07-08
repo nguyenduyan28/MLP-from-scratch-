@@ -1,28 +1,20 @@
 import numpy as np
 
-import torch
-from torch import nn
 
 
 class Module:
   _parameters = []
+  data_parameters = []
   def __init__(self):
     pass
   def __setattr__(self, name, value):
     nn_list  = [Linear, ReLU]
     if isinstance(value, (*nn_list,)):
       self._parameters.append({name : value})
+      if hasattr(value, 'params') and hasattr(value, 'bias'):
+        self.data_parameters.append({name : (value.params, value.bias)} )
+    super().__setattr__(name, value)
     
-  
-
-class MLP(Module):
-  def __init__(self):
-    super().__init__()
-    self.fc1 = Linear(3, 2)
-    self.a1 = ReLU()
-
-  
-
   @property
   def parameters(self):
     lines = [f"Parameters for {type(self).__name__}("] 
@@ -31,6 +23,22 @@ class MLP(Module):
         lines.append(f"  ({name}): {value}")
     lines.append(")")
     return '\n'.join(lines)
+  
+  def value_parameters(self):
+    list_params = []
+    for k in self.data_parameters:
+      for name, value in k.items():
+        params, bias = value
+        list_params.extend((params, bias))
+    return list_params
+
+  
+
+
+
+  
+
+
 
 
 
@@ -46,14 +54,12 @@ class Linear:
     '''
     self.params = np.random.randn(in_features, out_features) / np.sqrt(1 / (in_features))
     self.bias = np.random.randn(1 , out_features) / np.sqrt(1 / in_features)
-    self.params = np.concatenate((self.params, self.bias), axis = 0)
   
   def __repr__(self):
     return f"Linear(in_features={self.params.shape[0]}, out_features = {self.params.shape[1]})"
 
   def forward(self, X):
-    X = self.add_ones(X)
-    return X @ self.params
+    return (X @ self.params) + self.bias
   
   def __call__(self, X):
     return self.forward(X)
@@ -68,20 +74,16 @@ class ReLU:
   def __init__(self):
     pass
   def forward(self, X):
-    mask = np.array(X > 0)
-    return X * mask
+    self.params = np.array(X > 0)
+    return X * self.params
+
 
   def __call__(self, X):
     return self.forward(X)
   def __repr__(self):
     return "ReLU()"
 
-def main():
-  model = MLP()
-  print(model.parameters)
 
   
 
 
-if __name__ == '__main__':
-  main()
