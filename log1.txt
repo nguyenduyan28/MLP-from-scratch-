@@ -1,3 +1,0 @@
-<class 'tuple'>
-<class 'tuple'>
-32

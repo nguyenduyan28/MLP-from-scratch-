@@ -111,10 +111,11 @@ def test():
   print(f"Total loss is:  {total_loss / num_batches:2f}, Accuracy is : {acc / size :2f}")
   
 
-for idx in (range(num_epoch)):
-  train()
-  validation(idx)
-test()
+# for idx in (range(num_epoch)):
+#   train()
+#   validation(idx)
+# test()
 
 
+print(model.parameters)
 

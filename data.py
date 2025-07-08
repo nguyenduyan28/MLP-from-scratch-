@@ -124,35 +124,35 @@ class DataLoader:
 
 
 
-def main():
-  train_val_mnist = FashionMNIST(root = '.', train=True)
-  train_size = int(0.8 * len(train_val_mnist))
-  val_size = int(0.2 * len(train_val_mnist))
-  test_mnist = FashionMNIST(root = '.', train = False)
+# def main():
+#   train_val_mnist = FashionMNIST(root = '.', train=True)
+#   train_size = int(0.8 * len(train_val_mnist))
+#   val_size = int(0.2 * len(train_val_mnist))
+#   test_mnist = FashionMNIST(root = '.', train = False)
 
 
-  train_val_ds = Dataset(train_val_mnist)
+#   train_val_ds = Dataset(train_val_mnist)
 
-  train_ds, val_ds = random_split(train_val_ds, [train_size, val_size])
+#   train_ds, val_ds = random_split(train_val_ds, [train_size, val_size])
 
-  test_ds = Dataset(test_mnist)
+#   test_ds = Dataset(test_mnist)
 
 
   
 
 
 
-  train_loader = DataLoader(train_ds, batch_size=32, num_workers=1)
-  test_loader = DataLoader(test_ds, batch_size = 32, num_workers=1)
-  val_loader = DataLoader(val_ds, batch_size = 32, num_workers=1)
+#   train_loader = DataLoader(train_ds, batch_size=32, num_workers=1)
+#   test_loader = DataLoader(test_ds, batch_size = 32, num_workers=1)
+#   val_loader = DataLoader(val_ds, batch_size = 32, num_workers=1)
 
-  t1 = timeit.default_timer()
-  for batch in train_loader:
-    img_arr, label = batch
-    print(batch)
-    break
-  t2 = timeit.default_timer()
-  print(f"{t2 - t1:.2f}")
+#   t1 = timeit.default_timer()
+#   for batch in train_loader:
+#     img_arr, label = batch
+#     print(batch)
+#     break
+#   t2 = timeit.default_timer()
+#   print(f"{t2 - t1:.2f}")
   
-if __name__ == '__main__':
-  main()
+# if __name__ == '__main__':
+#   main()
