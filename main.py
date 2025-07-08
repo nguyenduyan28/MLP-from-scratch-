@@ -3,6 +3,7 @@ from nn import *
 from tqdm import tqdm
 from data import Dataset, DataLoader, random_split
 from FashionMNIST import FashionMNIST
+from loss import CrossEntropyLoss
 
 class MLP(Module):
   def __init__(self, image_size, num_of_classes):
@@ -45,6 +46,7 @@ test_mnist = FashionMNIST(root = '.', train = False)
 train_val_ds = Dataset(train_val_mnist)
 
 train_ds, val_ds = random_split(train_val_ds, [train_size, val_size])
+
 
 test_ds = Dataset(test_mnist)
 
@@ -110,11 +112,12 @@ val_loader = DataLoader(val_ds, batch_size = 32, num_workers=1)
 def main():
   img_size = 28 * 28
   model = MLP(image_size = img_size, num_of_classes=10)
+  loss_fn = CrossEntropyLoss()
   for batch in train_loader:
     img_arr, label = batch 
     output = model(img_arr)
-    print(output.shape)
-    break
+    loss = loss_fn(output, label)
+    print(loss)
 
 
 if __name__ == '__main__':
