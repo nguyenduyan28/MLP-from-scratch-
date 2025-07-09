@@ -46,9 +46,9 @@ The training pipeline uses your custom-built MLP and includes logging via tqdm.
 ```
 
 ## ✅ Results
-	•	Accuracy: ~85–87% on Fashion-MNIST test set after 20 epochs
-	•	Training fully on CPU using mini-batch SGD with Adam optimizer
+-	Accuracy: ~85–87% on Fashion-MNIST test set after 20 epochs
+-	Training fully on CPU using mini-batch SGD with Adam optimizer
 
 ## 📚 Notes
-	•	No autograd used — gradients are computed and applied manually
-	•	A PyTorch version is included in MLP_pytorch.py for performance comparison
+-	No autograd used — gradients are computed and applied manually
+-	A PyTorch version is included in MLP_pytorch.py for performance comparison
