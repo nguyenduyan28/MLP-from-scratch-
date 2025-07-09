@@ -2,40 +2,32 @@ import numpy as np
 
 
 class CrossEntropyLoss:
-  """
-  Computes the average cross-entropy loss over a batch of examples.
-
-  Parameters:
-  -----------
-  F : np.ndarray, shape (N, C)
-    The raw score (logit) matrix where N is the number of examples
-    and C is the number of classes. Each row corresponds to the unnormalized
-    class scores for a single input example.
-      
-  y : np.ndarray, shape (N,)
-    Ground truth labels for each example in the batch. Each entry is an integer
-    representing the correct class index (0 <= y[i] < C).
-
-  Returns:
-  --------
-  float
-    The average cross-entropy loss over the batch.
-
-  Notes:
-  ------
-  - Applies the numerical stability trick by shifting logits before computing softmax.
-  - The loss is computed as:
-    L_i = -f_{y_i} + log(sum_j exp(f_j))
-  - The final returned loss is the average across all examples.
-  """
   def __init__(self):
-    pass
+    self.softmax = None
+    self.y = None
 
   def forward(self, F, y):
-    F = F - np.max(F, axis = 1, keepdims=True)
-    correct_class_score = F[np.arange(F.shape[0]), y]
-    log_sum_other = np.log(np.sum(np.exp(F), axis=1, keepdims=True))
-    return (-1 / F.shape[0]) * np.sum(correct_class_score[:, np.newaxis] - log_sum_other) 
-  
+    """
+    F: (N, C) – logits
+    y: (N,)   – ground truth labels
+    """
+    F_shifted = F - np.max(F, axis=1, keepdims=True)
+    exp_scores = np.exp(F_shifted)
+    self.softmax = exp_scores / np.sum(exp_scores, axis=1, keepdims=True)  # (N, C)
+    self.y = y
+
+    log_probs = -np.log(self.softmax[np.arange(F.shape[0]), y] + 1e-9)
+    return np.mean(log_probs)
+
+  def backward(self):
+    """
+    Returns the gradient of loss w.r.t. logits F: ∂L/∂F
+    """
+    N = self.softmax.shape[0]
+    grad = self.softmax.copy()
+    grad[np.arange(N), self.y] -= 1
+    grad /= N
+    return grad
+
   def __call__(self, F, y):
     return self.forward(F, y)
