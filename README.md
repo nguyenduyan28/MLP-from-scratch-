@@ -35,7 +35,7 @@ python main.py
 The training pipeline uses your custom-built MLP and includes logging via tqdm.
 
 ## 📁 Project Structure
-
+```bash
 .
 ├── main.py             # Entry point, training/validation loop
 ├── nn.py               # Neural network building blocks (Linear, ReLU, Module)
@@ -43,6 +43,7 @@ The training pipeline uses your custom-built MLP and includes logging via tqdm.
 ├── data.py             # Dataset, DataLoader, random_split
 ├── FashionMNIST.py     # Dataset downloading and preprocessing
 ├── MLP_pytorch.py      # Baseline model using PyTorch (for comparison)
+```
 
 ## ✅ Results
 	•	Accuracy: ~85–87% on Fashion-MNIST test set after 20 epochs
