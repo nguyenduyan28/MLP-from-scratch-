@@ -1,35 +1,40 @@
+
 # MLP from Scratch – FashionMNIST Classifier
 
-This project implements a Multi-Layer Perceptron (MLP) from scratch using NumPy, designed to classify fashion images from the Fashion-MNIST dataset. It reproduces key components of a deep learning framework without using PyTorch or TensorFlow.
+This project implements a Multi-Layer Perceptron (MLP) from scratch using NumPy, designed to classify fashion images from the [Fashion-MNIST](https://github.com/zalandoresearch/fashion-mnist) dataset. It reproduces key components of a deep learning framework without using PyTorch or TensorFlow.
 
-# 🔧 Features
-	•	Fully connected layers, ReLU activations, and forward propagation
-	•	Manual backpropagation and gradient descent via Adam optimizer
-	•	Cross-entropy loss function
-	•	Custom Module, Linear, ReLU, and training loop logic
-	•	Data loading, batching, and train/val/test split
-	•	FashionMNIST dataset (images of clothing items in 10 classes)
+## 🔧 Features
 
-# 🧠 Model Architecture
+- Fully connected layers, ReLU activations, and forward propagation  
+- Manual backpropagation and gradient descent via Adam optimizer  
+- Cross-entropy loss function  
+- Custom `Module`, `Linear`, `ReLU`, and training loop logic  
+- Data loading, batching, and train/val/test split  
+- FashionMNIST dataset (images of clothing items in 10 classes)
+
+## 🧠 Model Architecture
 
 Input (28×28) → Flatten
 → Linear(784 → 512) → ReLU
 → Linear(512 → 256) → ReLU
 → Linear(256 → 10) → Softmax (via CrossEntropyLoss)
 
-# 🚀 How to Run
+## 🚀 How to Run
 
-1. Install Requirements
+### 1. Install Requirements
 
+```bash
 pip install numpy tqdm
+```
 
-2. Run Training
-
+### 2. Run Training
+```bash
 python main.py
+```
 
 The training pipeline uses your custom-built MLP and includes logging via tqdm.
 
-# 📁 Project Structure
+## 📁 Project Structure
 
 .
 ├── main.py             # Entry point, training/validation loop
@@ -39,10 +44,10 @@ The training pipeline uses your custom-built MLP and includes logging via tqdm.
 ├── FashionMNIST.py     # Dataset downloading and preprocessing
 ├── MLP_pytorch.py      # Baseline model using PyTorch (for comparison)
 
-# ✅ Results
+## ✅ Results
 	•	Accuracy: ~85–87% on Fashion-MNIST test set after 20 epochs
 	•	Training fully on CPU using mini-batch SGD with Adam optimizer
 
-# 📚 Notes
+## 📚 Notes
 	•	No autograd used — gradients are computed and applied manually
 	•	A PyTorch version is included in MLP_pytorch.py for performance comparison
